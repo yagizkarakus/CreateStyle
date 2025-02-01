@@ -8,11 +8,11 @@ import React from 'react';
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      <Stack.Screen options={{ title: 'register' }} />
       <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
+        <ThemedText type="title">Please register to CreateStyle.</ThemedText>
         <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
+          <ThemedText type="link">Go to login screen!</ThemedText>
         </Link>
       </ThemedView>
     </>
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
   },
   link: {
     marginTop: 15,
-    paddingVertical: 15,
+    // paddingVertical: 10,
   },
 });
 

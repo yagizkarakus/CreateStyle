@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "28e64dab-efb9-465f-a89d-fd23ec850ccd"
+      }
+    },
+    "owner": "yagito36000"
   }
 }
