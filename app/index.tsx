@@ -1,8 +1,9 @@
-import { Link, Stack } from 'expo-router';
+import { Link, router, Stack } from 'expo-router';
 import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import React, { useState } from 'react';
 import { TextInput, Button, Text } from 'react-native-paper';
+import { Route } from 'expo-router/build/Route';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState<string>('');
@@ -20,6 +21,7 @@ export default function LoginScreen() {
       if (email === 'test@example.com' && password === 'password') {
         alert('Login successful');
         // Navigate to home or another screen
+        router.replace('/(tabs)/home')
       } else {
         setError('Invalid email or password');
       }
@@ -63,7 +65,7 @@ export default function LoginScreen() {
               <Button mode="contained" onPress={handleLogin} style={styles.button}>
                 Login
               </Button>
-              <Button mode="contained"  style={styles.button}>
+              <Button mode="contained" onPress={ () => { router.replace('/register') } } style={styles.button}>
                 Register
               </Button>
             </View>
