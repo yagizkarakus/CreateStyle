@@ -2,13 +2,15 @@ import { router, Stack } from 'expo-router';
 import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput, Button, Text } from 'react-native-paper';
-import {auth} from '../FirebaseConfig'
-import { signInWithEmailAndPassword } from 'firebase/auth';
+
+import { useSession } from "@/context";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+
+  const { signIn } = useSession();
 
   const handleLogin = async () => {
     setError('');
@@ -17,14 +19,21 @@ export default function LoginScreen() {
       return;
     }
     try {
-      // Mock authentication logic
-      const user = await signInWithEmailAndPassword(auth, email, password)
-      if(user) router.replace('/(tabs)/home') 
+      return await signIn(email, password);
     } catch (err) {
+      console.log("[handleLogin] ==>", err);
       setError('Something went wrong');
-      console.log(err)
       alert(err);
+      return null;
     }
+  };
+
+  /**
+   * Handles the sign-in button press
+   */
+  const handleSignInPress = async () => {
+    const resp = await handleLogin();
+    router.replace("/(tabs)/home");
   };
   return (
     <>
@@ -59,7 +68,7 @@ export default function LoginScreen() {
                 theme={{ colors: { text: 'black' } }}
               />
               {error ? <Text style={styles.error}>{error}</Text> : null}
-              <Button mode="contained" onPress={handleLogin} style={styles.button}>
+              <Button mode="contained" onPress={handleSignInPress} style={styles.button}>
                 Login
               </Button>
               <Button mode="contained" onPress={ () => { router.replace('/register') } } style={styles.button}>
