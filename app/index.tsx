@@ -1,9 +1,9 @@
-import { Link, router, Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
 import React, { useState } from 'react';
 import { TextInput, Button, Text } from 'react-native-paper';
-import { Route } from 'expo-router/build/Route';
+import {auth} from '../FirebaseConfig'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState<string>('');
@@ -18,15 +18,12 @@ export default function LoginScreen() {
     }
     try {
       // Mock authentication logic
-      if (email === 'test@example.com' && password === 'password') {
-        alert('Login successful');
-        // Navigate to home or another screen
-        router.replace('/(tabs)/home')
-      } else {
-        setError('Invalid email or password');
-      }
+      const user = await signInWithEmailAndPassword(auth, email, password)
+      if(user) router.replace('/(tabs)/home') 
     } catch (err) {
       setError('Something went wrong');
+      console.log(err)
+      alert(err);
     }
   };
   return (
