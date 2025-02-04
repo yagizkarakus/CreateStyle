@@ -2,16 +2,22 @@ import { router, Stack } from 'expo-router';
 import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
 import React, { useState } from 'react';
 import { TextInput, Button, Text } from 'react-native-paper';
-
 import { useSession } from "@/context";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { signIn } = useSession();
 
+  // ============================================================================
+  // Handlers
+  // ============================================================================
+
+  /**
+   * Handles the sign-in process
+   * @returns {Promise<Models.User<Models.Preferences> | null>}
+   */
   const handleLogin = async () => {
     setError('');
     if (!email || !password) {
@@ -23,7 +29,6 @@ export default function LoginScreen() {
     } catch (err) {
       console.log("[handleLogin] ==>", err);
       setError('Something went wrong');
-      alert(err);
       return null;
     }
   };
@@ -33,11 +38,10 @@ export default function LoginScreen() {
    */
   const handleSignInPress = async () => {
     const resp = await handleLogin();
-    router.replace("/(tabs)/home");
+    router.replace("/(app)/(tabs)");
   };
   return (
     <>
-      <Stack.Screen options={{ title: 'Login' }} />
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
