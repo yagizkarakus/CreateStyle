@@ -1,30 +1,47 @@
-import { Link, router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, View } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
 import React, { useState } from 'react';
 import { TextInput, Button, Text } from 'react-native-paper';
+import { useSession } from "@/context";
 
 export default function RegisterScreen() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const { signUp } = useSession();
+  const [error, setError] = useState("");
+  
 
+  // ============================================================================
+  // Handlers
+  // ============================================================================
+
+  /**
+   * Handles the registration process
+   * @returns {Promise<Models.User<Models.Preferences> | null>}
+   */
   const handleRegister = async () => {
     setError('');
-    if (!email || !password) {
-      setError('Please fill in both fields');
+    if (!email || !password || !name) {
+      setError('Please fill in all fields');
       return;
     }
     try {
-      // Mock authentication logic
-      if (email === 'test@example.com' && password === 'password') {
-        alert('Register successful');
-        // Navigate to home or another screen
-      } else {
-        setError('Invalid email or password');
-      }
+      return await signUp(email, password, name);
     } catch (err) {
+      console.log("[handleRegister] ==>", err);
       setError('Something went wrong');
+      return null;
+    }
+  };
+
+  /**
+   * Handles the sign-up button press
+   */
+  const handleSignUpPress = async () => {
+    const resp = await handleRegister();
+    if (resp) {
+      router.replace("/(app)/(tabs)");
     }
   };
   return (
@@ -41,6 +58,14 @@ export default function RegisterScreen() {
                 <ThemedText type="link">Register!</ThemedText>
               </Link> */}
               <Text variant="headlineLarge" style={styles.title}>Register</Text>
+              <TextInput
+                label="Name"
+                value={name}
+                onChangeText={setName}
+                autoCapitalize="words"
+                style={styles.input}
+                theme={{ colors: { text: 'black' } }}
+              />
               <TextInput
                 label="Email"
                 value={email}
@@ -59,7 +84,7 @@ export default function RegisterScreen() {
                 theme={{ colors: { text: 'black' } }}
               />
               {error ? <Text style={styles.error}>{error}</Text> : null}
-              <Button mode="contained" onPress={handleRegister} style={styles.button}>
+              <Button mode="contained" onPress={handleSignUpPress} style={styles.button}>
                 Register
               </Button>
               <Button mode="contained" onPress={ () => { router.replace('/') } }  style={styles.button}>
