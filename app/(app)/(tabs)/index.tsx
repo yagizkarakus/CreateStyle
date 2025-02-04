@@ -6,10 +6,6 @@ import { router } from 'expo-router';
 import { getAuth } from 'firebase/auth';
 
 export default function HomeScreen() {
-
-  getAuth().onAuthStateChanged((user) => {
-    if (!user) router.replace('/');
-  });
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}

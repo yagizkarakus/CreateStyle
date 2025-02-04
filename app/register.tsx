@@ -29,7 +29,6 @@ export default function RegisterScreen() {
   };
   return (
     <>
-      <Stack.Screen options={{ title: 'Register' }} />
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

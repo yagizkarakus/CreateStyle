@@ -3,10 +3,10 @@
  * This module handles the setup of Firebase services for the application.
  * @module
  */
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "@firebase/app";
 
 // IGNORE IMPORT ERROR, this is a valid import, still investigating
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import { initializeAuth, getReactNativePersistence } from "@firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 // ============================================================================

@@ -12,7 +12,7 @@ export default function SettingScreen() {
   const auth = getAuth();
 
   onAuthStateChanged(auth, (user) => {
-    if (!user) router.replace('/')
+    if (!user) router.replace('/login')
   });
 
   return (
