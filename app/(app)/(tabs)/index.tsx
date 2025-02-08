@@ -6,45 +6,64 @@ import { router } from 'expo-router';
 import { getAuth } from 'firebase/auth';
 import { Text } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
 
   const clothes = [
-    { id: "1", image: "https://via.placeholder.com/100", name: "Red Dress" },
-    { id: "2", image: "https://via.placeholder.com/100", name: "Blue Jeans" },
-    { id: "3", image: "https://via.placeholder.com/100", name: "White Shirt" },
+    { id: "1", image: "https://picsum.photos/100", name: "Red Dress" },
+    { id: "2", image: "https://picsum.photos/100", name: "Blue Jeans" },
+    { id: "3", image: "https://picsum.photos/100", name: "White Shirt" },
+    { id: "4", image: "https://picsum.photos/100", name: "Red Dress" },
+    { id: "5", image: "https://picsum.photos/100", name: "pink socks" },
+    { id: "6", image: "https://picsum.photos/100", name: "pink skirt" },
+    { id: "7", image: "https://picsum.photos/100", name: "Red Dress" },
+    { id: "8", image: "https://picsum.photos/100", name: "Blue Jeans" },
+    { id: "9", image: "https://picsum.photos/100", name: "White Shirt" },
   ];
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back, User!</Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
-      {/* Upload Clothes */}
-      <TouchableOpacity style={styles.uploadButton} onPress={() => router.replace('/explore')}>
-        <Ionicons name="cloud-upload-outline" size={24} color="white" />
-        <Text style={styles.uploadText}>Explore New Clothes</Text>
-      </TouchableOpacity>
+        <Text style={styles.title}>Welcome Back, User!</Text>
 
-      {/* Suggested Outfits */}
-      <Text style={styles.sectionTitle}>Your Wardrobe</Text>
-      <FlatList
-        data={clothes}
-        horizontal
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.clothesItem}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={styles.clothesText}>{item.name}</Text>
-          </View>
-        )}
-      />
+        {/* Upload Clothes */}
+        <TouchableOpacity style={styles.uploadButton} onPress={() => router.replace('/explore')}>
+          <Ionicons name="cloud-upload-outline" size={24} color="white" />
+          <Text style={styles.uploadText}>Explore New Clothes</Text>
+        </TouchableOpacity>
 
-      {/* Outfit Suggestions */}
-      <Text style={styles.sectionTitle}>Suggested Outfits</Text>
-      <TouchableOpacity style={styles.suggestionButton}>
-        <Text style={styles.suggestionText}>Generate Outfit</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Suggested Outfits */}
+        <Text style={styles.sectionTitle}>Your Wardrobe</Text>
+        <FlatList
+          data={clothes}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.clothesItem}>
+              <Image source={{ uri: item.image }} style={styles.image} />
+              <Text style={styles.clothesText}>{item.name}</Text>
+            </View>
+          )}
+          contentContainerStyle={{
+            paddingHorizontal: 10,
+            paddingVertical: 5, // Ensure no extra padding
+            marginVertical: 0, // Remove unwanted margins
+          }}
+          style={{ flexGrow: 0, backgroundColor: "#3498db" }} // Ensure it doesn't expand unexpectedly
+          showsHorizontalScrollIndicator={false}
+        />
+
+
+
+        {/* Outfit Suggestions */}
+        <Text style={styles.sectionTitle}>Suggested Outfits</Text>
+        <TouchableOpacity style={styles.suggestionButton}>
+          <Text style={styles.suggestionText}>Generate Outfit</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -80,18 +99,25 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
   },
+  flatlistsection: {
+    paddingBottom: 0,
+    margin: 0,
+    height: 200
+  },
   clothesItem: {
     alignItems: "center",
+    justifyContent: "center", // Fix extra space
     marginRight: 15,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     borderRadius: 10,
   },
   clothesText: {
     marginTop: 5,
     fontSize: 14,
+    textAlign: "center",
   },
   suggestionButton: {
     backgroundColor: "#2ecc71",
