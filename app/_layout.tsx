@@ -30,9 +30,13 @@ export default function RootLayout() {
     return null;
   }
   return (
+    
     <SessionProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'black' }}>
+          <StatusBar style="dark" backgroundColor="black" />
+
+
           {/* 
             Slot renders child routes dynamically
             This includes both (app) and (auth) group routes
