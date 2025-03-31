@@ -1,9 +1,5 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { router } from 'expo-router';
-import { getAuth } from 'firebase/auth';
 import { Text } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
